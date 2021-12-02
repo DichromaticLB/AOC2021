@@ -8,10 +8,10 @@ SRCDIR = src
 
 TARGET =AOC2021 
 
-$(OBJSDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJSDIR)/%.o: $(SRCDIR)/%.cpp  $(INCLUDEDIR)/*.hpp
 	$(CXX) $(CXXFLAGS)  -c -o $@  $<
 
-$(TARGET):	$(OBJS)
+$(TARGET):	$(OBJS) 
 	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
 
 all:	$(TARGET)
