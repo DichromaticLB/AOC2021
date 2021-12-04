@@ -23,26 +23,26 @@ struct day3{
 	}
 
 	void firstStar(){
-		unsigned g=0,e=0;
+		uint64_t g=0,e=0;
 		for(unsigned it=0;it<bits_per_number;it++)
 		{
 			unsigned onecount=0;
 			for(auto&n:nums)
 			{
-				if(n&(1<<it))
+				if(n&(1l<<it))
 					onecount++;
 			}
 
 			if(onecount>nums.size()/2)
-				g|=1<<it;
+				g|=1l<<it;
 			else
-				e|=1<<it;
+				e|=1l<<it;
 		}
 
 		std::cout<<"Day 3 power consumption "<<g*e<<std::endl;
 	}
 
-	unsigned oxygen_co2(bool oxygen){
+	uint64_t oxygen_co2(bool oxygen){
 		auto nums=this->nums;
 
 		for(unsigned it=bits_per_number;it!=0;)
@@ -51,22 +51,22 @@ struct day3{
 			unsigned onecount=0,zerocount=0;
 			for(auto&n:nums)
 			{
-				if(n&(1<<it))
+				if(n&(1l<<it))
 					onecount++;
 			}
 
-			std::vector<uint32_t> newit;
+			std::vector<uint64_t> newit;
 			zerocount=nums.size()-onecount;
 
 			if((oxygen&&onecount>=zerocount)||((!oxygen)&&onecount<zerocount))
 			{
 				for(auto&n:nums)
-					if(n&(1<<it))
+					if(n&(1l<<it))
 						newit.push_back(n);
 			}
 			else
 				for(auto&n:nums)
-					if(!(n&(1<<it)))
+					if(!(n&(1l<<it)))
 						newit.push_back(n);
 
 			if(newit.size()==1)
@@ -85,7 +85,7 @@ struct day3{
 		std::cout<<"Day 3 CO2 scrubbing rating: "<<oxygen_co2(true)*oxygen_co2(false)<<std::endl;
 	}
 
-	std::vector<uint32_t> nums;
+	std::vector<uint64_t> nums;
 	unsigned bits_per_number;
 };
 

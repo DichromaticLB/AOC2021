@@ -3,6 +3,7 @@
 
 #include<fstream>
 #include<string>
+#include<vector>
 
 struct fiterator{
 
@@ -25,7 +26,7 @@ struct fiterator{
 	std::ifstream f;
 };
 
-
+std::vector<std::string> tokenize(const std::string &st,std::vector<char> separators={' '});
 
 
 #endif
