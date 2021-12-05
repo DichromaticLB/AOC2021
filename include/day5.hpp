@@ -13,49 +13,43 @@ struct day5{
 
 
 	struct path{
-		std::vector<uint32_t> getOverlaps(bool ignoreDiagonals=true){
+		std::vector<uint32_t> getOverlaps(bool ignoreDiagonals=true) const{
 
 			std::vector<uint32_t> res;
 			if(ignoreDiagonals&&x1!=x2&&y1!=y2)
 				return res;
 
-			uint16_t xit=x1,yit=y1;
-			std::vector<uint16_t> xpoints,ypoints;
-
-			while(xit!=x2){
-				xpoints.push_back(xit);
-				if(xit<x2)
-					xit++;
-				else
-					xit--;
-			}
-			xpoints.push_back(xit);
-
-			while(yit!=y2){
-				ypoints.push_back(yit);
-				if(yit<y2)
-					yit++;
-				else
-					yit--;
-			}
-			ypoints.push_back(yit);
-
-			while(xpoints.size()<ypoints.size())
-				xpoints.push_back(xpoints.front());
-
-			while(ypoints.size()<xpoints.size())
-				ypoints.push_back(ypoints.front());
-
-
-			for(unsigned i=0;i<xpoints.size();i++)
+			path me=*this;
+			bool first=true;
+			while(!me)
 			{
+				if(first)
+					first=false;
+				else
+					me.converge();
 				res.emplace_back();
-				res.back()|=xpoints[i];
+				res.back()|=me.x1;
 				res.back()<<=16;
-				res.back()|=ypoints[i];
-			}
+				res.back()|=me.y1;
+			};
 
 			return res;
+		}
+
+		void converge(){
+			if(x1<x2)
+				x1++;
+			else if(x1>x2)
+				x1--;
+
+			if(y1<y2)
+				y1++;
+			else if(y1>y2)
+				y1--;
+		}
+
+		operator bool() const{
+			return x1==x2&&y1==y2;
 		}
 
 		uint16_t x1,y1;
