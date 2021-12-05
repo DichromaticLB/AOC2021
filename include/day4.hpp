@@ -1,5 +1,5 @@
-#ifndef DBMW_INCLUDE_DAY3_HPP_
-#define DBMW_INCLUDE_DAY3_HPP_
+#ifndef DBMW_INCLUDE_DAY4_HPP_
+#define DBMW_INCLUDE_DAY4_HPP_
 
 #include"util.hpp"
 #include<vector>
