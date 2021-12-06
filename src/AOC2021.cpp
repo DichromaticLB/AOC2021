@@ -1,13 +1,13 @@
 #include<iostream>
 #include"util.hpp"
-#include"day5.hpp"
+#include"day6.hpp"
 
 using namespace std;
 
 int main(void) {
 
 
-	day5 d;
+	day6 d;
 	d.firstStar();
 	d.secondStar();
 }
