@@ -10,8 +10,6 @@
 #include<numeric>
 struct day6{
 
-
-
 	day6(const std::string& st="input/input6"){
 		fish.resize(9);
 		for(auto s:fiterator(st,','))
