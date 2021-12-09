@@ -29,4 +29,118 @@ struct fiterator{
 std::vector<std::string> tokenize(const std::string &st,std::vector<char> separators={' '});
 
 
+template<class T>
+struct board{
+
+	using row=std::vector<T>;
+
+	uint64_t width() const{
+		if(bd.size()==0)
+			throw std::runtime_error("Board: can't find width of empty board");
+		return bd[0].size();
+	}
+
+	uint64_t height() const{
+		return bd.size();
+	}
+
+	struct iter{
+
+		board* src;
+		int64_t x,y;
+
+		iter& operator++(){
+			if(x<(int64_t)src->width()-1)
+				x++;
+			else
+			{
+				x=0;
+				y++;
+			}
+
+
+			return *this;
+		}
+
+		iter left(){
+			iter res=*this;
+			res.x--;
+			return res;
+		}
+
+		iter right(){
+			iter res=*this;
+			res.x++;
+			return res;
+		}
+
+		iter top(){
+			iter res=*this;
+			res.y--;
+			return res;
+		}
+
+		iter bot(){
+			iter res=*this;
+			res.y++;
+			return res;
+		}
+
+		std::vector<iter> around4(){
+			return std::vector<iter>{
+				top(),
+				right(),
+				bot(),
+				left()
+			};
+		}
+
+		bool operator<(const iter& other) const{
+			if(y==other.y)
+				return x<other.x;
+			return y<other.y;
+		}
+
+		bool inBounds()const{
+			return !(x<0||x>=(int64_t)src->width()||y<0||y>=(int64_t)src->height());
+		}
+
+		T* operator*() const{
+			if(!inBounds())
+				return nullptr;
+
+			return &src->bd[y][x];
+		}
+
+		bool operator!=(const iter& other) const{
+			return x!=other.x||y!=other.y;
+		}
+	};
+
+	iter begin(){
+		iter res;
+		res.src=this;
+		res.x=0;
+		res.y=0;
+		return res;
+	}
+
+	iter end(){
+		iter res;
+		res.src=this;
+		res.x=0;
+		res.y=height();
+		return res;
+	}
+
+	void addRow(const std::vector<T>& data){
+		if(bd.size()!=0&&bd[0].size()!=data.size())
+			throw std::runtime_error("Trying to add row of different stride to board");
+		bd.push_back(data);
+
+	}
+
+	std::vector<row> bd;
+};
+
 #endif
