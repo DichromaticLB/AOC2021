@@ -80,9 +80,37 @@ struct board{
 			return res;
 		}
 
+		iter top_left(){
+			iter res=*this;
+			res.y--;
+			res.x--;
+			return res;
+		}
+
+		iter top_right(){
+			iter res=*this;
+			res.y--;
+			res.x++;
+			return res;
+		}
+
 		iter bot(){
 			iter res=*this;
 			res.y++;
+			return res;
+		}
+
+		iter bot_left(){
+			iter res=*this;
+			res.y++;
+			res.x--;
+			return res;
+		}
+
+		iter bot_right(){
+			iter res=*this;
+			res.y++;
+			res.x++;
 			return res;
 		}
 
@@ -92,6 +120,19 @@ struct board{
 				right(),
 				bot(),
 				left()
+			};
+		}
+
+		std::vector<iter> around8(){
+			return std::vector<iter>{
+				top(),
+				right(),
+				bot(),
+				left(),
+				top_left(),
+				top_right(),
+				bot_left(),
+				bot_right()
 			};
 		}
 
@@ -114,6 +155,10 @@ struct board{
 
 		bool operator!=(const iter& other) const{
 			return x!=other.x||y!=other.y;
+		}
+
+		bool operator==(const iter& other) const{
+			return !(*this!=other);
 		}
 	};
 
