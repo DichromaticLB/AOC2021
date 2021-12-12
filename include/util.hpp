@@ -5,6 +5,8 @@
 #include<string>
 #include<vector>
 
+using namespace std;
+
 struct fiterator{
 
 	struct _iter{

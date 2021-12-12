@@ -83,7 +83,7 @@ struct day11{
 
 	}
 
-	void firstStar(bool print=true){
+	void firstStar(){
 		auto cb=b;
 
 		for(unsigned e=0;e<100;e++)
