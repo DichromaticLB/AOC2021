@@ -48,7 +48,7 @@ struct day14{
 
 
 
-	void firstStar(bool print=true){
+	void firstStar(){
 		string base=expandPolymer(polymer,10);
 
 		vector<unsigned> ct(26,0);

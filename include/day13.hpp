@@ -54,7 +54,7 @@ struct day13{
 		d=res;
 	}
 
-	void firstStar(bool print=true){
+	void firstStar(){
 		set<coord> cpy=data;
 		foldX(cpy,folds[0].second);
 		cout<<"day 13, star1 visible dots:"<<cpy.size()<<endl;

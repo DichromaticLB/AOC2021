@@ -4,6 +4,10 @@
 #include<fstream>
 #include<string>
 #include<vector>
+#include<functional>
+#include<map>
+#include<iostream>
+#include<queue>
 
 using namespace std;
 
@@ -184,7 +188,56 @@ struct board{
 		if(bd.size()!=0&&bd[0].size()!=data.size())
 			throw std::runtime_error("Trying to add row of different stride to board");
 		bd.push_back(data);
+	}
 
+	int64_t path(
+			uint64_t initial_x,uint64_t initial_y,
+			uint64_t end_x,uint64_t end_y,
+			const std::function<int64_t (const iter& from,const iter& to)> value,
+			int64_t initial_cost=0,	bool use8=false)
+	{
+		iter b,e;
+		b.src=e.src=this;
+		b.x=initial_x,b.y=initial_y;
+		e.x=end_x,e.y=end_y;
+
+		if(!b.inBounds()||!e.inBounds())
+			throw runtime_error("Can't find shortest path, coordinates out of bound");
+
+		std::map<iter,int64_t> costs;
+		std::deque<iter> tovisit;
+		tovisit.push_back(b);
+		costs[b]=initial_cost;
+
+		while(tovisit.size())
+		{
+			auto e=tovisit.front();
+			tovisit.pop_front();
+			vector<iter> neighbours;
+
+			if(use8)
+				neighbours=e.around8();
+			else
+				neighbours=e.around4();
+
+			for(auto nb:neighbours)
+			{
+				if(!nb.inBounds())
+					continue;
+
+				auto move_cost=value(e,nb);
+				if(!costs.count(nb)||costs[nb]>costs[e]+move_cost)
+				{
+					costs[nb]=costs[e]+move_cost;
+					tovisit.push_back(nb);
+
+				}
+			}
+		}
+
+		if(!costs.count(e))
+			return -1;
+		return costs[e];
 	}
 
 	std::vector<row> bd;

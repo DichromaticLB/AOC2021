@@ -68,7 +68,7 @@ struct day12{
 		}
 	}
 
-	void firstStar(bool print=true){
+	void firstStar(){
 		vector<path> finished;
 		walk("start",path{},set<string>(),finished);
 		cout<<"day 12, paths existing: "<<finished.size()<<endl;
