@@ -131,14 +131,15 @@ struct board{
 
 		std::vector<iter> around8(){
 			return std::vector<iter>{
-				top(),
-				right(),
-				bot(),
-				left(),
 				top_left(),
+				top(),
 				top_right(),
+				right(),
+				bot_right(),
+				bot(),
 				bot_left(),
-				bot_right()
+				left()
+
 			};
 		}
 
@@ -157,6 +158,13 @@ struct board{
 				return nullptr;
 
 			return &src->bd[y][x];
+		}
+
+		T* bufferAccess() const{
+			if(!inBounds())
+				return nullptr;
+
+			return &src->buffer[y][x];
 		}
 
 		bool operator!=(const iter& other) const{
@@ -188,6 +196,24 @@ struct board{
 		if(bd.size()!=0&&bd[0].size()!=data.size())
 			throw std::runtime_error("Trying to add row of different stride to board");
 		bd.push_back(data);
+	}
+
+	void prepareBuffer(){
+		buffer=bd;
+	}
+
+	void swapBuffer(){
+		bd=buffer;
+	}
+
+	friend ostream& operator<<(ostream& o,const board<T>&b){
+		for(auto t:b.bd)
+		{
+			for(auto el:t)
+				o<<(el?'#':'.');
+			o<<endl;
+		}
+		return o;
 	}
 
 	int64_t path(
@@ -241,6 +267,9 @@ struct board{
 	}
 
 	std::vector<row> bd;
+
+private:
+	std::vector<row> buffer;
 };
 
 #endif
