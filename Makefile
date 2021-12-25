@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++20 -fmax-errors=5 -O0 -g   -Wall -fmessage-length=0 -I $(INCLUDEDIR)  
+CXXFLAGS = -std=c++20 -fmax-errors=5 -O2 -g   -Wall -fmessage-length=0 -I $(INCLUDEDIR)  
 
 _OBJS = AOC2021.o util.o
 OBJS = $(patsubst %,$(OBJSDIR)/%,$(_OBJS))

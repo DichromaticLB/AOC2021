@@ -35,7 +35,7 @@ struct fiterator{
 std::vector<std::string> tokenize(const std::string &st,std::vector<char> separators={' '});
 
 
-template<class T>
+template<class T,bool wrap=false>
 struct board{
 
 	using row=std::vector<T>;
@@ -68,21 +68,40 @@ struct board{
 			return *this;
 		}
 
+		void dowrap(){
+			if(wrap){
+				int64_t w=src->width();
+				int64_t h=src->height();
+				while(x<0)
+					x+=w;
+				while(x>=w)
+					x-=w;
+				while(y<0)
+					y+=h;
+				while(y>=h)
+					y-=h;
+
+			}
+		}
+
 		iter left(){
 			iter res=*this;
 			res.x--;
+			res.dowrap();
 			return res;
 		}
 
 		iter right(){
 			iter res=*this;
 			res.x++;
+			res.dowrap();
 			return res;
 		}
 
 		iter top(){
 			iter res=*this;
 			res.y--;
+			res.dowrap();
 			return res;
 		}
 
@@ -90,6 +109,7 @@ struct board{
 			iter res=*this;
 			res.y--;
 			res.x--;
+			res.dowrap();
 			return res;
 		}
 
@@ -97,12 +117,14 @@ struct board{
 			iter res=*this;
 			res.y--;
 			res.x++;
+			res.dowrap();
 			return res;
 		}
 
 		iter bot(){
 			iter res=*this;
 			res.y++;
+			res.dowrap();
 			return res;
 		}
 
@@ -110,6 +132,7 @@ struct board{
 			iter res=*this;
 			res.y++;
 			res.x--;
+			res.dowrap();
 			return res;
 		}
 
@@ -117,6 +140,7 @@ struct board{
 			iter res=*this;
 			res.y++;
 			res.x++;
+			res.dowrap();
 			return res;
 		}
 
@@ -205,7 +229,7 @@ struct board{
 	void swapBuffer(){
 		bd=buffer;
 	}
-
+/*
 	friend ostream& operator<<(ostream& o,const board<T>&b){
 		for(auto t:b.bd)
 		{
@@ -214,7 +238,7 @@ struct board{
 			o<<endl;
 		}
 		return o;
-	}
+	} */
 
 	int64_t path(
 			uint64_t initial_x,uint64_t initial_y,

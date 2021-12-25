@@ -57,7 +57,7 @@ struct day22{
 			check(y2);
 			check(z1);
 			check(z2);
-
+#undef check
 			return false;
 		}
 

@@ -141,7 +141,7 @@ struct day16{
 					if(packettotal)
 					{
 						data=read(b,11);
-						while(subpackets.size()!=data)
+						while(subpackets.size()!=(unsigned)data)
 						{
 							packet k(b);
 							subpackets.push_back(k);
